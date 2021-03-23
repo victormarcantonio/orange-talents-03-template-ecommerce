@@ -18,6 +18,10 @@ public class UsuarioRequest {
         this.senha = senha;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
     public Usuario converter(){
         return new Usuario(login, new SenhaLimpa(senha));
     }
