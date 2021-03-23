@@ -19,6 +19,6 @@ public class UsuarioRequest {
     }
 
     public Usuario converter(){
-        return new Usuario(login, senha);
+        return new Usuario(login, new SenhaLimpa(senha));
     }
 }

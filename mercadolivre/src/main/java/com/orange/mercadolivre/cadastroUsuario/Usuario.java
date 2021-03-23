@@ -1,6 +1,8 @@
 package com.orange.mercadolivre.cadastroUsuario;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 
 import javax.persistence.Entity;
@@ -31,9 +33,11 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(@NotBlank @Email String login, @NotBlank @Size(min = 6) String senha) {
+    public Usuario(@NotBlank @Email String login, @NotBlank @Size(min = 6) @NotNull SenhaLimpa senhaLimpa) {
+        Assert.isTrue(StringUtils.hasLength(login), "Não pode estar vazio");
+        Assert.notNull(senhaLimpa, "Senha limpa não pode ser nula");
         this.login = login;
-        this.senha = new BCryptPasswordEncoder().encode(senha);
+        this.senha = senhaLimpa.hash();
     }
 
     @Override
