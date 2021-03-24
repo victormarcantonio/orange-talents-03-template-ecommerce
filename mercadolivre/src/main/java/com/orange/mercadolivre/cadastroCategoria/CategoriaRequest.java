@@ -16,10 +16,11 @@ public class CategoriaRequest {
     }
 
     public Categoria converter(CategoriaRepository categoriaRepository){
-        if(idCategoriaMae==null){
-            return new Categoria(nome);
+        Categoria categoria = new Categoria(nome);
+        if(idCategoriaMae!=null){
+            Categoria categoriaMae = categoriaRepository.getOne(idCategoriaMae);
+            categoria.setCategoriaMae(categoriaMae);
         }
-        Categoria categoriaMae = categoriaRepository.getOne(idCategoriaMae);
-        return new Categoria(nome, categoriaMae);
+        return categoria;
     }
 }

@@ -25,8 +25,7 @@ public class Categoria {
         this.nome = nome;
     }
 
-    public Categoria(@NotBlank String nome, Categoria categoriaMae) {
-        this.nome = nome;
+    public void setCategoriaMae(Categoria categoriaMae) {
         this.categoriaMae = categoriaMae;
     }
 
