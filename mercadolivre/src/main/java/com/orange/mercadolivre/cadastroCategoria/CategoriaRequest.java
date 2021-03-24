@@ -1,6 +1,7 @@
 package com.orange.mercadolivre.cadastroCategoria;
 
 import com.orange.mercadolivre.validator.CampoUnico;
+import com.orange.mercadolivre.validator.ExistsById;
 
 import javax.validation.constraints.NotBlank;
 
