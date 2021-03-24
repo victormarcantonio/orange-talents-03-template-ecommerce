@@ -9,6 +9,7 @@ public class CategoriaRequest {
     @NotBlank
     @CampoUnico(domainClass = Categoria.class, fieldName = "nome")
     private String nome;
+    @ExistsById(domainClass = Categoria.class, fieldName = "id")
     private Long idCategoriaMae;
 
     public CategoriaRequest(@NotBlank String nome, Long idCategoriaMae) {

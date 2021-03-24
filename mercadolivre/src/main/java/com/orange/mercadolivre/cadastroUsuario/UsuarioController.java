@@ -13,10 +13,6 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
     private ProibeEmailDuplicadoUsuarioValidator proibeEmailDuplicadoUsuarioValidator;
 
-    @InitBinder
-    public void init(WebDataBinder binder){
-      binder.addValidators(proibeEmailDuplicadoUsuarioValidator);
-    }
 
     public UsuarioController(UsuarioRepository usuarioRepository, ProibeEmailDuplicadoUsuarioValidator proibeEmailDuplicadoUsuarioValidator) {
         this.usuarioRepository = usuarioRepository;

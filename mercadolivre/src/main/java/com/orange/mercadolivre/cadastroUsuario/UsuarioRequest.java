@@ -1,5 +1,7 @@
 package com.orange.mercadolivre.cadastroUsuario;
 
+import com.orange.mercadolivre.validator.CampoUnico;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -7,6 +9,7 @@ import javax.validation.constraints.Size;
 public class UsuarioRequest {
     @Email
     @NotBlank
+    @CampoUnico(domainClass = Usuario.class, fieldName = "login")
     private String login;
     @NotBlank
     @Size(min = 6)
