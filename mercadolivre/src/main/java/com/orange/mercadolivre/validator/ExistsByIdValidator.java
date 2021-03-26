@@ -5,7 +5,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.List;
 
 public class ExistsByIdValidator implements ConstraintValidator<ExistsById, Long> {
 
@@ -24,8 +23,11 @@ public class ExistsByIdValidator implements ConstraintValidator<ExistsById, Long
 
     @Override
     public boolean isValid(Long id, ConstraintValidatorContext context) {
-        Query query = manager.createQuery("select 1 from " +klass.getName()+" where " +domainAttribute+"=:value");
-        query.setParameter("value", id);
-        return !query.getResultList().isEmpty();
+        if(id!=null) {
+            Query query = manager.createQuery("select 1 from " + klass.getName() + " where " + domainAttribute + "=:value");
+            query.setParameter("value", id);
+            return !query.getResultList().isEmpty();
+        }
+       return true;
     }
 }
