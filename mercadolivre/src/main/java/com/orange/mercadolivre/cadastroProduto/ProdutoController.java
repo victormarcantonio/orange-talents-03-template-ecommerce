@@ -4,10 +4,8 @@ import com.orange.mercadolivre.cadastroCategoria.CategoriaRepository;
 import com.orange.mercadolivre.cadastroUsuario.Usuario;
 import com.orange.mercadolivre.cadastroUsuario.UsuarioRepository;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -17,6 +15,11 @@ public class ProdutoController {
 
     private CategoriaRepository categoriaRepository;
     private ProdutoRepository produtoRepository;
+
+    @InitBinder
+    public void init(WebDataBinder binder){
+      binder.addValidators(new ProibeCaracteristicaComNomeIgualValidator());
+    }
 
 
     public ProdutoController(CategoriaRepository categoriaRepository, ProdutoRepository produtoRepository) {

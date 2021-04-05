@@ -14,20 +14,12 @@ public class Caracteristica {
     @NotBlank
     private String descricao;
     @ManyToOne
-    @JoinColumn(name = "produto_id")
     private Produto produto;
 
-    public Caracteristica(@NotBlank String nome, @NotBlank String descricao) {
+    public Caracteristica(@NotBlank String nome, @NotBlank String descricao, Produto produto) {
         this.nome = nome;
         this.descricao = descricao;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
+        this.produto = produto;
     }
 
 }

@@ -10,7 +10,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProdutoRequest {
@@ -43,7 +46,18 @@ public class ProdutoRequest {
 
     public Produto converter (CategoriaRepository categoriaRepository, Usuario usuario) {
        Categoria categoria = categoriaRepository.getOne(idCategoria);
-       List<Caracteristica> listaCaracteristicas = caracteristicas.stream().map(CaracteristicaRequest::converter).collect(Collectors.toList());
-       return new Produto(nome,valor,quantidadeDisponivel,listaCaracteristicas,descricao,categoria,usuario);
+       return new Produto(nome,valor,quantidadeDisponivel,caracteristicas,descricao,categoria,usuario);
+    }
+
+    public Set<String> buscaCaracteristicasIguais() {
+        HashSet<String>nomesIguais = new HashSet<>();
+        HashSet<String>resultados = new HashSet<>();
+        for(CaracteristicaRequest caracteristica : caracteristicas){
+            String nome = caracteristica.getNome();
+            if(!nomesIguais.add(nome)){
+                resultados.add(nome);
+            }
+        }
+        return resultados;
     }
 }

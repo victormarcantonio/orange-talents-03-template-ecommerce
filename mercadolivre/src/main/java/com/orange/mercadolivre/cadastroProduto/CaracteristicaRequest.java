@@ -26,8 +26,8 @@ public class CaracteristicaRequest {
         return descricao;
     }
 
-    public Caracteristica converter(){
-        return new Caracteristica(nome, descricao);
+    public Caracteristica converter(Produto produto){
+        return new Caracteristica(nome, descricao, produto);
     }
 
 }
