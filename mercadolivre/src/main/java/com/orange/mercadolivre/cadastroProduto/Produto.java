@@ -1,8 +1,10 @@
 package com.orange.mercadolivre.cadastroProduto;
 
 import com.orange.mercadolivre.cadastroCategoria.Categoria;
+import com.orange.mercadolivre.cadastroImagem.Imagem;
+import com.orange.mercadolivre.cadastroImagem.ImagemRequest;
 import com.orange.mercadolivre.cadastroUsuario.Usuario;
-import com.orange.mercadolivre.validator.ExistsById;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -38,6 +40,9 @@ public class Produto {
     @ManyToOne
     private Usuario usuario;
     private LocalDateTime instante = LocalDateTime.now();
+    @OneToMany(mappedBy = "produto")
+    @Lob
+    private Set<Imagem> imagens = new HashSet<>();
 
     public Produto() {
 
@@ -51,6 +56,16 @@ public class Produto {
         this.descricao = descricao;
         this.categoria = categoria;
         this.usuario = usuario;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public Imagem novaImagem(String link){
+        Imagem imagem = new Imagem(link, this);
+        this.imagens.add(imagem);
+        return imagem;
     }
 
 

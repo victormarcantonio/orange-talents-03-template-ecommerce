@@ -4,6 +4,7 @@ import com.orange.mercadolivre.cadastroCategoria.Categoria;
 import com.orange.mercadolivre.cadastroCategoria.CategoriaRepository;
 import com.orange.mercadolivre.cadastroUsuario.Usuario;
 import com.orange.mercadolivre.validator.ExistsById;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -33,6 +34,7 @@ public class ProdutoRequest {
     private String descricao;
     @ExistsById(domainClass = Categoria.class, fieldName = "id")
     private Long idCategoria;
+    private MultipartFile imagem;
 
 
     public ProdutoRequest(@NotBlank String nome, @NotNull @Positive BigDecimal valor, @NotNull @Positive int quantidadeDisponivel, @Size(min = 3) List<CaracteristicaRequest> caracteristicas, @NotBlank @Size(max = 1000) String descricao, Long idCategoria) {
@@ -42,11 +44,6 @@ public class ProdutoRequest {
         this.caracteristicas = caracteristicas;
         this.descricao = descricao;
         this.idCategoria = idCategoria;
-    }
-
-    public Produto converter (CategoriaRepository categoriaRepository, Usuario usuario) {
-       Categoria categoria = categoriaRepository.getOne(idCategoria);
-       return new Produto(nome,valor,quantidadeDisponivel,caracteristicas,descricao,categoria,usuario);
     }
 
     public Set<String> buscaCaracteristicasIguais() {
@@ -60,4 +57,10 @@ public class ProdutoRequest {
         }
         return resultados;
     }
+
+    public Produto converter (CategoriaRepository categoriaRepository, Usuario usuario) {
+       Categoria categoria = categoriaRepository.getOne(idCategoria);
+       return new Produto(nome,valor,quantidadeDisponivel,caracteristicas,descricao,categoria,usuario);
+    }
+
 }
