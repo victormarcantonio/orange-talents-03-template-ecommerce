@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 public class Usuario implements UserDetails {
@@ -93,4 +94,16 @@ public class Usuario implements UserDetails {
         return true;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(id, usuario.id) && Objects.equals(instante, usuario.instante) && Objects.equals(login, usuario.login) && Objects.equals(senha, usuario.senha);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, instante, login, senha);
+    }
 }

@@ -40,8 +40,7 @@ public class Produto {
     @ManyToOne
     private Usuario usuario;
     private LocalDateTime instante = LocalDateTime.now();
-    @OneToMany(mappedBy = "produto")
-    @Lob
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private Set<Imagem> imagens = new HashSet<>();
 
     public Produto() {
@@ -62,12 +61,10 @@ public class Produto {
         return usuario;
     }
 
-    public Imagem novaImagem(String link){
-        Imagem imagem = new Imagem(link, this);
-        this.imagens.add(imagem);
-        return imagem;
+    public void associaImagens(Set<String> links) {
+      Set<Imagem> imagens = links.stream().map(link -> new Imagem(link,this)).collect(Collectors.toSet());
+      this.imagens.addAll(imagens);
     }
-
 
     @Override
     public String toString() {
@@ -76,9 +73,17 @@ public class Produto {
                 ", nome='" + nome + '\'' +
                 ", valor=" + valor +
                 ", quantidadeDisponivel=" + quantidadeDisponivel +
+                ", caracteristicas=" + caracteristicas +
                 ", descricao='" + descricao + '\'' +
                 ", categoria=" + categoria +
                 ", usuario=" + usuario +
+                ", instante=" + instante +
+                ", imagens=" + imagens +
                 '}';
     }
+
+    public boolean pertenceAoUsuario(Usuario usuario) {
+        return this.usuario.equals(usuario);
+    }
+    
 }

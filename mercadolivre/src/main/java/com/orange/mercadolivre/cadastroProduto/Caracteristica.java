@@ -16,10 +16,21 @@ public class Caracteristica {
     @ManyToOne
     private Produto produto;
 
+    @Deprecated
+    public Caracteristica() {
+    }
+
     public Caracteristica(@NotBlank String nome, @NotBlank String descricao, Produto produto) {
         this.nome = nome;
         this.descricao = descricao;
         this.produto = produto;
     }
 
+    @Override
+    public String toString() {
+        return "Caracteristica{" +
+                "nome='" + nome + '\'' +
+                ", descricao='" + descricao + '\'' +
+                '}';
+    }
 }
