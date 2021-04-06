@@ -3,6 +3,8 @@ package com.orange.mercadolivre.cadastroProduto;
 import com.orange.mercadolivre.cadastroCategoria.Categoria;
 import com.orange.mercadolivre.cadastroImagem.Imagem;
 import com.orange.mercadolivre.cadastroImagem.ImagemRequest;
+import com.orange.mercadolivre.cadastroOpiniao.Opiniao;
+import com.orange.mercadolivre.cadastroPergunta.Pergunta;
 import com.orange.mercadolivre.cadastroUsuario.Usuario;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,6 +44,10 @@ public class Produto {
     private LocalDateTime instante = LocalDateTime.now();
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private Set<Imagem>imagens = new HashSet<>();
+    @OneToMany(mappedBy = "produto")
+    private List<Opiniao> opinioes;
+    @OneToMany(mappedBy = "produto")
+    private List<Pergunta>perguntas;
 
     public Produto() {
 
@@ -61,7 +67,49 @@ public class Produto {
         return usuario;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public int getQuantidadeDisponivel() {
+        return quantidadeDisponivel;
+    }
+
+    public List<Caracteristica> getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public LocalDateTime getInstante() {
+        return instante;
+    }
+
+    public Set<Imagem> getImagens() {
+        return imagens;
+    }
+
+    public List<Opiniao> getOpinioes() {
+        return opinioes;
+    }
+
+    public List<Pergunta> getPerguntas() {
+        return perguntas;
+    }
 
     public boolean pertenceAoUsuario(Usuario usuario) {
         return this.usuario.equals(usuario);
@@ -70,6 +118,15 @@ public class Produto {
     public void associaImagens(Set<String> links) {
        Set<Imagem> imagens = links.stream().map(link -> new Imagem(link, this)).collect(Collectors.toSet());
        this.imagens.addAll(imagens);
+    }
+
+    public long TotalNotas(){
+       return this.opinioes.stream().count();
+    }
+
+    public OptionalDouble calculaMediaNotas(){
+
+        return this.opinioes.stream().mapToDouble(opiniao -> opiniao.getNota()).average();
     }
 
     @Override

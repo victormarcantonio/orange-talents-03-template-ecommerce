@@ -4,6 +4,7 @@ import com.orange.mercadolivre.cadastroCategoria.CategoriaRepository;
 import com.orange.mercadolivre.cadastroImagem.ImagemRequest;
 import com.orange.mercadolivre.cadastroImagem.Uploader;
 import com.orange.mercadolivre.cadastroUsuario.Usuario;
+import com.orange.mercadolivre.paginaDetalhe.ProdutoResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -53,5 +55,14 @@ public class ProdutoController {
         produto.associaImagens(links);
         produtoRepository.save(produto);
         return ResponseEntity.ok(produto.toString());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProdutoResponse> detalhe(@PathVariable ("id") Long idProduto){
+       Optional<Produto> possivelProduto = produtoRepository.findById(idProduto);
+       if(possivelProduto.isPresent()){
+           return ResponseEntity.ok(new ProdutoResponse(possivelProduto.get()));
+       }
+       return ResponseEntity.notFound().build();
     }
 }

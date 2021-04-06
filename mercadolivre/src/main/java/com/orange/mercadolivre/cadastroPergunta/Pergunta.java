@@ -44,6 +44,10 @@ public class Pergunta  {
         return produto.getUsuario();
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
     @Override
     public String toString() {
         return "Pergunta{" +
