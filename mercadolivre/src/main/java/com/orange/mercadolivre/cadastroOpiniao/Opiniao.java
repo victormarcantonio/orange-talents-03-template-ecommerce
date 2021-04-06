@@ -4,19 +4,17 @@ import com.orange.mercadolivre.cadastroProduto.Produto;
 import com.orange.mercadolivre.cadastroUsuario.Usuario;
 import com.orange.mercadolivre.validator.ExistsById;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Opiniao {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Min(1)
     @Max(5)
@@ -24,6 +22,7 @@ public class Opiniao {
     @NotBlank
     private String titulo;
     @NotBlank
+    @Size(max = 500)
     private String descricao;
     @ManyToOne
     private Usuario usuario;

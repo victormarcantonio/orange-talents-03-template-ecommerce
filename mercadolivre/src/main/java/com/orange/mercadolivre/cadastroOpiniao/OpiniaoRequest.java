@@ -3,6 +3,7 @@ package com.orange.mercadolivre.cadastroOpiniao;
 import com.orange.mercadolivre.cadastroProduto.Produto;
 import com.orange.mercadolivre.cadastroUsuario.Usuario;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -14,6 +15,7 @@ public class OpiniaoRequest {
     @Max(5)
     private int nota;
     @NotBlank
+    @Column(columnDefinition = "text")
     private String titulo;
     @NotBlank
     private String descricao;
