@@ -1,11 +1,21 @@
 package com.orange.mercadolivre.cadastroPergunta;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
-@Component
-public class EnviaEmail {
+import javax.validation.constraints.Email;
 
-    public void envia(String email){
-        System.out.println(email);
+@Component
+@Primary
+public class EnviaEmail implements CentralEmail {
+
+
+    @Override
+    public void send(String body, String subject, String nameFrom, String from, String to) {
+        System.out.println(body);
+        System.out.println(subject);
+        System.out.println(nameFrom);
+        System.out.println(from);
+        System.out.println(to);
     }
 }

@@ -17,7 +17,7 @@ public class PerguntaRequest {
         return titulo;
     }
 
-    public Pergunta converter(Object source, Usuario usuario, Produto produto){
-        return new Pergunta(source, titulo, usuario, produto);
+    public Pergunta converter(Usuario usuario, Produto produto){
+        return new Pergunta(titulo, usuario, produto);
     }
 }

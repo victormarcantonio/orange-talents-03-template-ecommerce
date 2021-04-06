@@ -18,22 +18,22 @@ public class PerguntaController {
 
     private ProdutoRepository produtoRepository;
     private PerguntaRepository perguntaRepository;
-    private ApplicationContext context;
+    private Email email;
 
-    public PerguntaController(ProdutoRepository produtoRepository, PerguntaRepository perguntaRepository, ApplicationContext context) {
+    public PerguntaController(ProdutoRepository produtoRepository, PerguntaRepository perguntaRepository, Email email) {
         this.produtoRepository = produtoRepository;
         this.perguntaRepository = perguntaRepository;
-        this.context = context;
+        this.email = email;
     }
 
     @PostMapping("/{id}")
     public ResponseEntity<?> cadastrar(@PathVariable ("id") Long idProduto, @RequestBody @Valid PerguntaRequest request, @AuthenticationPrincipal Usuario usuario){
         Optional<Produto> possivelProduto = produtoRepository.findById(idProduto);
         return possivelProduto.map(produto -> {
-            Pergunta pergunta = request.converter(this,usuario, possivelProduto.get());
+            Pergunta pergunta = request.converter(usuario, possivelProduto.get());
             perguntaRepository.save(pergunta);
-            context.publishEvent(pergunta);
-            return ResponseEntity.ok(context);
+           email.novaPergunta(pergunta);
+            return ResponseEntity.ok(pergunta.toString());
         }).orElse(ResponseEntity.notFound().build());
     }
 }

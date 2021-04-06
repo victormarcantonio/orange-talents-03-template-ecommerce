@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import java.time.Instant;
 
 @Entity
-public class Pergunta extends ApplicationEvent {
+public class Pergunta  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,15 +22,26 @@ public class Pergunta extends ApplicationEvent {
     @ManyToOne
     private Produto produto;
 
-    public Pergunta(Object source) {
-        super(source);
+    @Deprecated
+    public Pergunta() {
     }
 
-    public Pergunta(Object source, @NotBlank String titulo, Usuario usuario, Produto produto) {
-        super(source);
+    public Pergunta(@NotBlank String titulo, Usuario usuario, Produto produto) {
         this.titulo = titulo;
         this.usuario = usuario;
         this.produto = produto;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public Usuario getDonoProduto(){
+        return produto.getUsuario();
     }
 
     @Override
