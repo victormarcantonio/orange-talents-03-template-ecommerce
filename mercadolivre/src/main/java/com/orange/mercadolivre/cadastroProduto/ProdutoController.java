@@ -1,12 +1,9 @@
 package com.orange.mercadolivre.cadastroProduto;
 
 import com.orange.mercadolivre.cadastroCategoria.CategoriaRepository;
-import com.orange.mercadolivre.cadastroImagem.Imagem;
 import com.orange.mercadolivre.cadastroImagem.ImagemRequest;
 import com.orange.mercadolivre.cadastroImagem.Uploader;
-import com.orange.mercadolivre.cadastroImagem.UploaderFake;
 import com.orange.mercadolivre.cadastroUsuario.Usuario;
-import com.orange.mercadolivre.cadastroUsuario.UsuarioRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,8 +11,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -54,7 +49,7 @@ public class ProdutoController {
         if(!produto.pertenceAoUsuario(usuario)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        Set<String> links = uploaderFake.envia(request.getImagens());
+       Set<String>links = uploaderFake.envia(request.getImagens());
         produto.associaImagens(links);
         produtoRepository.save(produto);
         return ResponseEntity.ok(produto.toString());

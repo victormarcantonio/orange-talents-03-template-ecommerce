@@ -13,10 +13,9 @@ import java.util.stream.Collectors;
 @Primary
 public class UploaderFake implements Uploader{
 
+    @Override
     public Set<String> envia(List<MultipartFile> imagens) {
-        return imagens.stream()
-                .map(imagem -> "http://bucket.io/"
-                 + imagem.getOriginalFilename())
-                .collect(Collectors.toSet());
+        return imagens.stream().map(imagem -> "http://bucket.io/"
+        + imagem.getOriginalFilename()).collect(Collectors.toSet());
     }
 }
