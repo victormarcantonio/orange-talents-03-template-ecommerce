@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -48,6 +49,8 @@ public class Produto {
     private List<Opiniao> opinioes;
     @OneToMany(mappedBy = "produto")
     private List<Pergunta>perguntas;
+    @Version
+    private int versao;
 
     public Produto() {
 
@@ -120,13 +123,25 @@ public class Produto {
        this.imagens.addAll(imagens);
     }
 
-    public long TotalNotas(){
-       return this.opinioes.stream().count();
+    public int TotalNotas(){
+       return this.opinioes.size();
     }
 
-    public OptionalDouble calculaMediaNotas(){
+    public double calculaMediaNotas(){
+        OptionalDouble media =  this.opinioes.stream().mapToInt(opiniao -> opiniao.getNota()).average();
+        if(media.isPresent()){
+           return  media.getAsDouble();
+        }
+        return 0.0;
+    }
 
-        return this.opinioes.stream().mapToDouble(opiniao -> opiniao.getNota()).average();
+    public boolean abateEstoque(int quantidadeCompra) {
+        return this.quantidadeDisponivel - quantidadeCompra > -1;
+    }
+
+    public int atualizaQuantidadeDisponivel(int quantidadeCompra){
+        this.versao++;
+        return this.quantidadeDisponivel - quantidadeCompra;
     }
 
     @Override

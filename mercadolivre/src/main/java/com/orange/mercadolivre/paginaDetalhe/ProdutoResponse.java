@@ -16,8 +16,8 @@ public class ProdutoResponse {
     private String descricao;
     private List<OpiniaoResponse>opinioes = new ArrayList<>();
     private List<PerguntaResponse>perguntas = new ArrayList<>();
-    private long notas;
-    private OptionalDouble mediaNotas;
+    private int notas;
+    private double mediaNotas;
 
 
     public ProdutoResponse(Produto produto) {
@@ -60,11 +60,11 @@ public class ProdutoResponse {
         return links;
     }
 
-    public long getNotas() {
+    public int getNotas() {
         return notas;
     }
 
-    public OptionalDouble getMediaNotas() {
+    public double getMediaNotas() {
         return mediaNotas;
     }
 }

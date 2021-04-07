@@ -57,6 +57,7 @@ public class Opiniao {
         return usuario;
     }
 
+
     @Override
     public String toString() {
         return "Opiniao{" +

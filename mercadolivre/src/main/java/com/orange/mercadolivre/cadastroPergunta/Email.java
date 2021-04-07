@@ -1,5 +1,6 @@
 package com.orange.mercadolivre.cadastroPergunta;
 
+import com.orange.mercadolivre.finalizaCompra.Compra;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,5 +14,9 @@ public class Email {
 
     public void novaPergunta(Pergunta pergunta){
         centralEmail.send("<html>...</html>", "Nova pergunta", pergunta.getUsuario().getUsername(),"novapergunta@email.com", pergunta.getDonoProduto().getUsername());
+    }
+
+    public void informaVendedorCompra(Compra compra){
+        centralEmail.send("<html>...</html>", "Nova Compra", compra.getComprador().getUsername(),"novacompra@email.com", compra.getDonoProduto().getUsername());
     }
 }
