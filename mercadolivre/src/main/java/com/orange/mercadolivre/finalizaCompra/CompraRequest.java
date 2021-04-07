@@ -39,8 +39,6 @@ public class CompraRequest {
 
     public Compra converter (ProdutoRepository produtoRepository, Usuario usuario){
         Produto produto  = produtoRepository.getOne(idProduto);
-        int quantidadeAtualizada = produto.atualizaQuantidadeDisponivel(quantidade);
-        produtoRepository.atualizaQuantidadeEstoque(quantidadeAtualizada, idProduto);
         return new Compra(quantidade, produto, formaPagamento, usuario, produto.getValor());
     }
 }

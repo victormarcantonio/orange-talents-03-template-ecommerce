@@ -136,7 +136,8 @@ public class Produto {
     }
 
     public boolean abateEstoque(int quantidadeCompra) {
-        return this.quantidadeDisponivel - quantidadeCompra > -1;
+        this.quantidadeDisponivel-= quantidadeCompra;
+        return this.quantidadeDisponivel>=0;
     }
 
     public int atualizaQuantidadeDisponivel(int quantidadeCompra){
