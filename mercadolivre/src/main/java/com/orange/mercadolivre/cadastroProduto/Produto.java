@@ -140,11 +140,6 @@ public class Produto {
         return this.quantidadeDisponivel>=0;
     }
 
-    public int atualizaQuantidadeDisponivel(int quantidadeCompra){
-        this.versao++;
-        return this.quantidadeDisponivel - quantidadeCompra;
-    }
-
     @Override
     public String toString() {
         return "Produto{" +
