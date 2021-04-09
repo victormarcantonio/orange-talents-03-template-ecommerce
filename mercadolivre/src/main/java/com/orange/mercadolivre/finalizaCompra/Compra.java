@@ -22,7 +22,9 @@ public class Compra {
     private int quantidade;
     @ManyToOne
     private Produto produto;
+    @Enumerated(EnumType.STRING)
     private FormaPagamento formaPagamento;
+    @Enumerated(EnumType.STRING)
     private Status status = Status.INICIADA;
     private UUID identificador = UUID.randomUUID();
     @ManyToOne
@@ -51,7 +53,33 @@ public class Compra {
         return produto.getUsuario();
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public FormaPagamento getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public BigDecimal getValorProduto() {
+        return valorProduto;
+    }
+
+    public Set<Transacao> getTransacoes() {
+        return transacoes;
+    }
 
     public UUID getIdentificador() {
         return identificador;
@@ -64,9 +92,21 @@ public class Compra {
     public void novaTransacao(GatewayCriaTransacao gatewayCriaTransacao){
         Transacao transacao = gatewayCriaTransacao.criaTransacao(this);
         Assert.isTrue(!this.transacoes.contains(transacao), "Já existe uma transação processada" + transacao);
-        Set<Transacao>transacoesSucesso = this.transacoes.stream().filter(Transacao::retornaSucesso).collect(Collectors.toSet());
-        Assert.isTrue(transacoesSucesso.isEmpty(), "Compra já concluída");
+        //Assert.isTrue(transacoesSucesso.isEmpty(), "Compra já concluída");
         this.transacoes.add(transacao);
+    }
+
+    private Set<Transacao>transacoesSucesso(){
+        Set<Transacao>transacoesSucesso = this.transacoes.stream().filter(Transacao::retornaSucesso).collect(Collectors.toSet());
+        return transacoesSucesso;
+    }
+
+    public boolean retornaSucesso(){
+        return !this.transacoesSucesso().isEmpty();
+    }
+
+    public Set<Transacao> transacoesComFalha(){
+        return this.transacoes.stream().filter(Transacao::retornaFalha).collect(Collectors.toSet());
     }
 
 }

@@ -1,5 +1,6 @@
 package com.orange.mercadolivre.finalizaCompra;
 
+import com.orange.mercadolivre.validator.CampoUnico;
 import com.orange.mercadolivre.validator.ExistsById;
 
 import javax.validation.constraints.NotNull;
@@ -7,21 +8,18 @@ import javax.validation.constraints.NotNull;
 public class PagseguroRequest implements GatewayCriaTransacao{
 
     @NotNull
-    @ExistsById(domainClass = Compra.class, fieldName = "id")
-    private Long idCompra;
-    @NotNull
     private Long idPagamento;
     @NotNull
     private StatusPagseguro statusPagseguro;
 
-    public PagseguroRequest(Long idCompra, Long idPagamento, StatusPagseguro statusPagseguro) {
-        this.idCompra = idCompra;
+    public PagseguroRequest(Long idPagamento, StatusPagseguro statusPagseguro) {
         this.idPagamento = idPagamento;
         this.statusPagseguro = statusPagseguro;
     }
 
-    public Long getIdCompra() {
-        return idCompra;
+
+    public Long getIdPagamento() {
+        return idPagamento;
     }
 
     public StatusPagseguro getStatusPagseguro() {

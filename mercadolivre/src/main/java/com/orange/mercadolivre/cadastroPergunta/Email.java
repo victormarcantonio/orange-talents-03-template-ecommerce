@@ -19,4 +19,8 @@ public class Email {
     public void informaVendedorCompra(Compra compra){
         centralEmail.send("<html>...</html>", "Nova Compra", compra.getComprador().getUsername(),"novacompra@email.com", compra.getDonoProduto().getUsername());
     }
+
+    public void informaClienteCompraSucesso(Compra compra){
+        centralEmail.send("<html>Compra efetuada com sucesso: Seguem dados "+compra.toString()+"</html>", "Nova Compra", compra.getDonoProduto().getUsername(),"novacompra@email.com", compra.getComprador().getUsername());
+    }
 }

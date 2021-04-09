@@ -13,6 +13,7 @@ public class Transacao {
     @ManyToOne
     private Compra compra;
     private Long idPagamento;
+    @Enumerated(EnumType.STRING)
     private StatusTransacao status;
     @PastOrPresent
     private Instant instante = Instant.now();
@@ -31,8 +32,9 @@ public class Transacao {
         return this.status.equals(StatusTransacao.SUCESSO);
     }
 
-
-
+    public boolean retornaFalha(){
+        return this.status.equals(StatusTransacao.FALHA);
+    }
 
     @Override
     public boolean equals(Object o) {
